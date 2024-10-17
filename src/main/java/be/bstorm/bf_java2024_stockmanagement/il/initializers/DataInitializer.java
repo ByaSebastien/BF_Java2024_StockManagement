@@ -45,7 +45,7 @@ public class DataInitializer implements CommandLineRunner {
                     new Article(
                             UUID.randomUUID(),
                             "Dragon ball sparkling zero",
-                            50L,
+                            4999L,
                             VAT.TWENTY_ONE,
                             null,
                             categories.stream().filter(
@@ -54,7 +54,7 @@ public class DataInitializer implements CommandLineRunner {
                     new Article(
                             UUID.randomUUID(),
                             "Sun Tzu, L'art de la guèrre",
-                            5L,
+                            599L,
                             VAT.TWENTY_ONE,
                             null,
                             categories.stream().filter(
@@ -63,7 +63,7 @@ public class DataInitializer implements CommandLineRunner {
                     new Article(
                             UUID.randomUUID(),
                             "Le dernier samurai",
-                            3L,
+                            399L,
                             VAT.TWENTY_ONE,
                             null,
                             categories.stream().filter(
@@ -108,20 +108,17 @@ public class DataInitializer implements CommandLineRunner {
                     new Stock(
                             UUID.randomUUID(),
                             movements.get(0).getQuantity(),
-                            articles.stream().filter(
-                                    a -> a.getDesignation().equals("Dragon ball sparkling zero")).findFirst().orElseThrow()
+                            movements.get(0).getArticle()
                     ),
                     new Stock(
                             UUID.randomUUID(),
                             movements.get(1).getQuantity(),
-                            articles.stream().filter(
-                                    a -> a.getDesignation().equals("Sun Tzu, L'art de la guèrre")).findFirst().orElseThrow()
+                            movements.get(1).getArticle()
                     ),
                     new Stock(
                             UUID.randomUUID(),
                             movements.get(2).getQuantity(),
-                            articles.stream().filter(
-                                    a -> a.getDesignation().equals("Le dernier samurai")).findFirst().orElseThrow()
+                            movements.get(2).getArticle()
                     )
             );
 
