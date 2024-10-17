@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+<th:block th:insert="~{layout/header}"></th:block>
+<main>
+    <div class="card" th:object="${article}">
+        <h2 th:text="*{designation()}"></h2>
+        <img th:if="*{picture() != null}" th:src="*{picture()}" th:alt="*{designation()}">
+        <p>Price TTE : <span th:text="*{unitPriceExcludingTax()}"></span></p>
+        <p>Price TTC : <span th:text="*{unitPriceIncludingTax()}"></span></p>
+        <p>Added value : <span th:text="*{addedValue()}"></span></p>
+        <p>VAT : <span th:text="*{vat().value}"></span> %</p>
+        <p>Categorie : <span th:text="*{category()}"></span></p>
+        <p>Quantity : <span th:text="*{quantity()}"></span></p>
+    </div>
+</main>
+<th:block th:insert="~{layout/footer}"></th:block>
+</body>
+</html>

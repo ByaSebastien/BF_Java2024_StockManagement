@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/styles/style.css}">
 </head>
 <body>
-    <th:block th:insert="layout/header"></th:block>
+    <th:block th:insert="~{layout/header}"></th:block>
     <main>
         <table>
             <thead>
@@ -16,6 +16,7 @@
                     <th>Price TTC</th>
                     <th>Category</th>
                     <th>Quantity</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,10 +26,15 @@
                     <td th:text="*{unitPriceIncludingTax() + ' €'}"></td>
                     <td th:text="*{category()}"></td>
                     <td th:text="*{quantity()}"></td>
+                    <td>
+                        <button>
+                            <a th:href="@{/article/{id} (id=*{id()})}">Details</a>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </main>
-    <th:block th:insert="layout/footer"></th:block>
+    <th:block th:insert="~{layout/footer}"></th:block>
 </body>
 </html>

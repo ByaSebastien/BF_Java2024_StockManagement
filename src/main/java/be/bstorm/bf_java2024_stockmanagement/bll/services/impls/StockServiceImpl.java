@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +18,10 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<Stock> getStocks() {
         return stockRepository.findAll();
+    }
+
+    @Override
+    public Stock getStockByArticleId(UUID articleId) {
+        return stockRepository.findByArticleId(articleId).orElseThrow();
     }
 }
