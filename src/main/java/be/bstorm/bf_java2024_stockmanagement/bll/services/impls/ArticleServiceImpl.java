@@ -30,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         if(!image.isEmpty()) {
             String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            Path imagePath = Path.of(System.getProperty("user.dir"), "src", "main", "resources", "static", "images", imageName);
+            Path imagePath = Path.of(System.getProperty("user.dir"), "images", imageName);
             try {
                 Files.write(imagePath,image.getBytes());
                 article.setPicture(imageName);

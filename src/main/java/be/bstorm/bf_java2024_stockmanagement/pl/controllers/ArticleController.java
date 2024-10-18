@@ -9,9 +9,12 @@ import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos.ArticleDTO;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos.ArticleDetailsDTO;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.forms.ArticleForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,7 +62,22 @@ public class ArticleController {
     }
 
     @PostMapping("/create")
-    public String createArticle(@ModelAttribute ArticleForm articleForm, Model model) {
+    public String createArticle(
+            @Valid @ModelAttribute ArticleForm articleForm,
+            BindingResult bindingResult,
+            Model model
+    ) {
+
+        if(bindingResult.hasErrors()) {
+
+            List<String> errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+
+            model.addAttribute("errors", errors);
+            model.addAttribute("articleForm", articleForm);
+            model.addAttribute("vatOptions", VAT.values());
+            model.addAttribute("categories",categoryService.findAll());
+            return "article/create";
+        }
 
         Category category = categoryService.findById(articleForm.getCategoryId());
         Article article = articleForm.toArticle();

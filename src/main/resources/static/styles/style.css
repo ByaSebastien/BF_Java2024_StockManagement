@@ -83,6 +83,11 @@ main .card p{
     margin-left: 15px;
 }
 
+main .card img {
+    width: fit-content;
+    margin: 15px;
+}
+
 footer{
     margin-top: auto;
     background-color: lightgrey;
@@ -102,4 +107,24 @@ button{
 
 button a{
     color: white;
+}
+
+main h2{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+main form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 2rem;
+    gap: 15px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+main form input, main form select {
+    padding: 5px 10px;
 }
