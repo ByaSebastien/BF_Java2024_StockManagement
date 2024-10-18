@@ -1,7 +1,6 @@
 package be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
-import be.bstorm.bf_java2024_stockmanagement.dl.entities.Stock;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 
 import java.util.UUID;
@@ -18,8 +17,7 @@ public record ArticleDetailsDTO(
         int quantity
 ) {
 
-    public static ArticleDetailsDTO fromStock(Stock stock) {
-        Article a = stock.getArticle();
+    public static ArticleDetailsDTO fromArticle(Article a) {
         return new ArticleDetailsDTO(
                 a.getId(),
                 a.getDesignation(),
@@ -29,7 +27,7 @@ public record ArticleDetailsDTO(
                 a.getVat(),
                 a.getPicture(),
                 a.getCategory().getDesignation(),
-                stock.getCurrentQuantity()
+                a.getStock() == null ? 0 : a.getStock().getCurrentQuantity()
         );
     }
 }

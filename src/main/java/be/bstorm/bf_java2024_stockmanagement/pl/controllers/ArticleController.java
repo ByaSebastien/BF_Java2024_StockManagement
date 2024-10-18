@@ -2,7 +2,6 @@ package be.bstorm.bf_java2024_stockmanagement.pl.controllers;
 
 import be.bstorm.bf_java2024_stockmanagement.bll.services.ArticleService;
 import be.bstorm.bf_java2024_stockmanagement.bll.services.CategoryService;
-import be.bstorm.bf_java2024_stockmanagement.bll.services.StockService;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Category;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
@@ -26,15 +25,14 @@ import java.util.UUID;
 @RequestMapping("/article")
 public class ArticleController {
 
-    private final StockService stockService;
     private final ArticleService articleService;
     private final CategoryService categoryService;
 
     @GetMapping
     public String getArticles(Model model) {
 
-        List<ArticleDTO> articles = stockService.getStocks().stream()
-                .map(ArticleDTO::fromStock)
+        List<ArticleDTO> articles = articleService.findAll().stream()
+                .map(ArticleDTO::fromArticle)
                 .toList();
         model.addAttribute("articles", articles);
         return "article/index";
@@ -44,7 +42,7 @@ public class ArticleController {
     public String getArticle(@PathVariable UUID id, Model model) {
 
         try{
-            ArticleDetailsDTO dto = ArticleDetailsDTO.fromStock(stockService.getStockByArticleId(id));
+            ArticleDetailsDTO dto = ArticleDetailsDTO.fromArticle(articleService.findById(id));
             model.addAttribute("article", dto);
             return "article/details";
         } catch (NoSuchElementException e){

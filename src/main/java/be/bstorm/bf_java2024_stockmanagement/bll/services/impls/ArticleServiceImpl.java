@@ -2,9 +2,7 @@ package be.bstorm.bf_java2024_stockmanagement.bll.services.impls;
 
 import be.bstorm.bf_java2024_stockmanagement.bll.services.ArticleService;
 import be.bstorm.bf_java2024_stockmanagement.dal.repositories.ArticleRepository;
-import be.bstorm.bf_java2024_stockmanagement.dal.repositories.StockRepository;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
-import be.bstorm.bf_java2024_stockmanagement.dl.entities.Stock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,7 +18,16 @@ import java.util.UUID;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final StockRepository stockRepository;
+
+    @Override
+    public List<Article> findAll() {
+        return articleRepository.findAll();
+    }
+
+    @Override
+    public Article findById(UUID id) {
+        return articleRepository.findById(id).orElseThrow();
+    }
 
     @Override
     public Article save(Article article, MultipartFile image) {
@@ -38,12 +46,6 @@ public class ArticleServiceImpl implements ArticleService {
                 throw new RuntimeException(e);
             }
         }
-        Article newArticle = articleRepository.save(article);
-        stockRepository.save(new Stock(
-                UUID.randomUUID(),
-                0,
-                newArticle
-        ));
-        return newArticle;
+        return articleRepository.save(article);
     }
 }

@@ -2,8 +2,8 @@ package be.bstorm.bf_java2024_stockmanagement.dl.entities;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.order.Order;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public class OrderLine {
     @EmbeddedId
     private OrderLineId id;
 
-    @Min(0)
+    @Range(min = 0L)
     @Column(nullable = false)
     private int quantity;
 

@@ -2,8 +2,8 @@ package be.bstorm.bf_java2024_stockmanagement.dl.entities;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,30 +11,35 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
+@Getter
+@EqualsAndHashCode(callSuper = true, of = {"designation", "unitPriceExcludingTax", "vat", "category"})
+@ToString(callSuper = true, of = {"designation", "unitPriceExcludingTax", "vat", "category"})
 public class Article extends BaseEntity {
 
-    @Getter @Setter
+    @Setter
     @Column(nullable = false, unique = true,length = 80)
     private String designation;
 
-    @Getter @Setter
+    @Setter
     @Column(nullable = false)
-    @Min(0L)
+    @Range(min = 0L)
     private long unitPriceExcludingTax;
 
-    @Getter @Setter
+    @Setter
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VAT vat;
 
-    @Getter @Setter
+    @Setter
     @Column(nullable = true)
     private String picture;
 
-    @Getter @Setter
+    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+
+    @OneToOne(mappedBy = "article",fetch = FetchType.EAGER)
+    private Stock stock;
 
     public Article(String designation, long unitPriceExcludingTax, VAT vat) {
         this.designation = designation;
@@ -49,6 +54,10 @@ public class Article extends BaseEntity {
         this.vat = vat;
         this.picture = picture;
         this.category = category;
+    }
+
+    protected void setStock(Stock stock) {
+        this.stock = stock;
     }
 
     public long getUnitPriceIncludingTax() {

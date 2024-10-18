@@ -2,8 +2,8 @@ package be.bstorm.bf_java2024_stockmanagement.dl.entities;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.StockMovementType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class StockMovement extends BaseEntity {
     private StockMovementType movementType;
 
     @Column(nullable = false)
-    @Min(0)
+    @Range(min = 0L)
     private int quantity;
 
     @Column(nullable = false)
