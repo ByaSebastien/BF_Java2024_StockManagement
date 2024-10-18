@@ -1,4 +1,4 @@
-package be.bstorm.bf_java2024_stockmanagement.pl.models;
+package be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Stock;

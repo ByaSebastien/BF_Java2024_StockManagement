@@ -10,7 +10,7 @@
 <main>
     <div class="card" th:object="${article}">
         <h2 th:text="*{designation()}"></h2>
-        <img th:if="*{picture() != null}" th:src="*{picture()}" th:alt="*{designation()}">
+        <img th:if="*{picture() != null}" th:src="@{'/images/' + *{picture()}}" th:alt="*{designation()}">
         <p>Price TTE : <span th:text="*{unitPriceExcludingTax()}"></span></p>
         <p>Price TTC : <span th:text="*{unitPriceIncludingTax()}"></span></p>
         <p>Added value : <span th:text="*{addedValue()}"></span></p>

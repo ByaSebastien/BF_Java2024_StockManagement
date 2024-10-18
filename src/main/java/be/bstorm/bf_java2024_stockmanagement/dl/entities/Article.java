@@ -36,6 +36,12 @@ public class Article extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+    public Article(String designation, long unitPriceExcludingTax, VAT vat) {
+        this.designation = designation;
+        this.unitPriceExcludingTax = unitPriceExcludingTax;
+        this.vat = vat;
+    }
+
     public Article(UUID id, String designation, long unitPriceExcludingTax, VAT vat, String picture, Category category) {
         super(id);
         this.designation = designation;

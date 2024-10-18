@@ -47,7 +47,7 @@ public class DataInitializer implements CommandLineRunner {
                             "Dragon ball sparkling zero",
                             4999L,
                             VAT.TWENTY_ONE,
-                            null,
+                            "Dragonballsparklingzero.jpg",
                             categories.stream().filter(
                                     c -> c.getDesignation().equals("Jeux vidéo")).findFirst().orElseThrow()
                     ),

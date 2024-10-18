@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Add article</title>
+</head>
+<body>
+<form method="post" th:action="@{/article/create}" th:object="${articleForm}" enctype="multipart/form-data">
+    <div>
+        <label for="designation">Designation : </label>
+        <input id="designation" type="text" th:field="*{designation}">
+    </div>
+    <div>
+        <label for="price">Price TTE</label>
+        <input id="price" type="number" th:field="*{unitPriceExcludingTax}">
+    </div>
+    <div>
+        <label>VAT : </label>
+        <input th:each="vatOption : ${vatOptions}"
+               type="radio"
+               th:value="${vatOption}"
+               th:field="*{vat}"
+        th:text="${vatOption.value}+ ' %'">
+    </div>
+    <div>
+        <label for="category">Category :</label>
+        <select th:field="*{categoryId}" id="category">
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.designation}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="picture">Picture :</label>
+        <input id="picture" type="file" th:field="*{image}">
+    </div>
+    <button>Add</button>
+</form>
+</body>
+</html>
