@@ -28,4 +28,12 @@ public class Stock extends BaseEntity{
         this.article = article;
         article.setStock(this);
     }
+
+    public void addQuantity(int quantity) {
+        currentQuantity += quantity;
+    }
+
+    public void subtractQuantity(int quantity) {
+        currentQuantity -= quantity;
+    }
 }

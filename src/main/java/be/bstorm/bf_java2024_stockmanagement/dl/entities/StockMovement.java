@@ -1,6 +1,7 @@
 package be.bstorm.bf_java2024_stockmanagement.dl.entities;
 
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.StockMovementType;
+import be.bstorm.bf_java2024_stockmanagement.dl.listeners.StockMovementListener;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Getter @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
+@EntityListeners(StockMovementListener.class)
 public class StockMovement extends BaseEntity {
 
     @Column(nullable = false)
