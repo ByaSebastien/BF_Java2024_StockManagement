@@ -40,7 +40,7 @@
             <input id="picture" type="file" th:field="*{image}" accept=".jpg,.jpeg,.png">
             <img th:if="*{imageUrl != null}" th:src="@{'/images/' + *{imageUrl}}" th:alt="*{designation}">
         </div>
-        <button>Add</button>
+        <button>Update</button>
     </form>
 </main>
 <th:block th:insert="~{layout/footer}"></th:block>

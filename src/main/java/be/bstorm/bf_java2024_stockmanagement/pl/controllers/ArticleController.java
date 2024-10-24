@@ -93,4 +93,27 @@ public class ArticleController {
         model.addAttribute("categories",categoryService.findAll());
         return "article/update";
     }
+
+    @PostMapping("/update")
+    public String updateArticle(
+        @Valid @ModelAttribute ArticleUpdateForm articleForm,
+        BindingResult bindingResult,
+        Model model
+    ){
+        if(bindingResult.hasErrors()) {
+
+            List<String> errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+
+            model.addAttribute("errors", errors);
+            model.addAttribute("articleForm", articleForm);
+            model.addAttribute("vatOptions", VAT.values());
+            model.addAttribute("categories",categoryService.findAll());
+            return "article/update";
+        }
+
+        Article article = articleForm.toArticle();
+        article.setCategory(categoryService.findById(articleForm.getCategoryId()));
+        articleService.update(article,articleForm.getImage());
+        return "redirect:/article";
+    }
 }
