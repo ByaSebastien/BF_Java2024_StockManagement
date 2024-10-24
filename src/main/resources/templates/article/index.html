@@ -29,14 +29,14 @@
             <td th:text="*{unitPriceIncludingTax() + ' €'}"></td>
             <td th:text="*{category()}"></td>
             <td th:text="*{quantity()}"></td>
-            <td>
+            <td class="buttons">
                 <button>
                     <a th:href="@{/article/{id} (id=*{id()})}">Details</a>
                 </button>
                 <button>
                     <a th:href="@{/article/update/{id} (id=*{id()})}">Update</a>
                 </button>
-                <form method="post" th:action="@{/article/delete/{id} (id=*{id()})}">
+                <form class="delete-button-form" method="post" th:action="@{/article/delete/{id} (id=*{id()})}">
                     <button type="submit">Delete</button>
                 </form>
             </td>
