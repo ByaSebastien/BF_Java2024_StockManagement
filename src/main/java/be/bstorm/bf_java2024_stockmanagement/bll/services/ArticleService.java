@@ -11,4 +11,5 @@ public interface ArticleService {
     List<Article> findAll();
     Article findById(UUID id);
     Article save(Article article, MultipartFile image);
+    void update(Article article, MultipartFile image);
 }

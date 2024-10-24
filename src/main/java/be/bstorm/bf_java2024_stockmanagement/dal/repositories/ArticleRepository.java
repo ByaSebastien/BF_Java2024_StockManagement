@@ -12,4 +12,7 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
 
     @Query("select count(a) > 0 from Article a where a.designation ilike :designation")
     boolean existsByDesignation(String designation);
+
+    @Query("select count(a) > 0 from Article a where a.id != :id and a.designation = :designation")
+    boolean existsInOtherArticleByDesignation(UUID id, String designation);
 }

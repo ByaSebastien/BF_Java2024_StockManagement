@@ -47,6 +47,13 @@ public class Article extends BaseEntity {
         this.vat = vat;
     }
 
+    public Article(UUID id, String designation, long unitPriceExcludingTax, VAT vat) {
+        super(id);
+        this.designation = designation;
+        this.unitPriceExcludingTax = unitPriceExcludingTax;
+        this.vat = vat;
+    }
+
     public Article(UUID id, String designation, long unitPriceExcludingTax, VAT vat, String picture, Category category) {
         super(id);
         this.designation = designation;

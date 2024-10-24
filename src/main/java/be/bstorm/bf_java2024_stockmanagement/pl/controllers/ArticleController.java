@@ -8,6 +8,7 @@ import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos.ArticleDTO;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.dtos.ArticleDetailsDTO;
 import be.bstorm.bf_java2024_stockmanagement.pl.models.article.forms.ArticleForm;
+import be.bstorm.bf_java2024_stockmanagement.pl.models.article.forms.ArticleUpdateForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -82,5 +83,14 @@ public class ArticleController {
         article.setCategory(category);
         articleService.save(article ,articleForm.getImage());
         return "redirect:/article";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateArticle(@PathVariable UUID id, Model model) {
+        Article article = articleService.findById(id);
+        model.addAttribute("articleForm", ArticleUpdateForm.fromArticle(article));
+        model.addAttribute("vatOptions", VAT.values());
+        model.addAttribute("categories",categoryService.findAll());
+        return "article/update";
     }
 }

@@ -9,7 +9,7 @@ public class ImageFormatValidator implements ConstraintValidator<ImageFormat, Mu
 
     @Override
     public boolean isValid(MultipartFile value, ConstraintValidatorContext constraintValidatorContext) {
-        if(value == null){
+        if(value == null || value.isEmpty()){
             return true;
         }
         String imageName = value.getOriginalFilename();

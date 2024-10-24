@@ -80,7 +80,8 @@ main .card h2{
 }
 
 main .card p{
-    margin-left: 15px;
+    margin: 0 15px;
+
 }
 
 main .card img {

@@ -37,15 +37,41 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(UUID.randomUUID());
 
         if(!image.isEmpty()) {
-            String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            Path imagePath = Path.of(System.getProperty("user.dir"), "images", imageName);
-            try {
-                Files.write(imagePath,image.getBytes());
-                article.setPicture(imageName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            article.setPicture(saveImage(image));
         }
         return articleRepository.save(article);
+    }
+
+    @Override
+    public void update(Article article, MultipartFile image) {
+
+        Article existingArticle = articleRepository.findById(article.getId()).orElseThrow();
+
+        if(articleRepository.existsInOtherArticleByDesignation(article.getId(),article.getDesignation())){
+            throw new IllegalArgumentException("Designation already exists");
+        }
+
+        existingArticle.setDesignation(article.getDesignation());
+        existingArticle.setUnitPriceExcludingTax(article.getUnitPriceExcludingTax());
+        existingArticle.setVat(article.getVat());
+        existingArticle.setCategory(article.getCategory());
+
+        if(!image.isEmpty()) {
+            existingArticle.setPicture(saveImage(image));
+        }
+
+        articleRepository.save(existingArticle);
+    }
+
+    private String saveImage(MultipartFile image) {
+
+        String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        Path imagePath = Path.of(System.getProperty("user.dir"), "images", imageName);
+        try {
+            Files.write(imagePath,image.getBytes());
+            return imageName;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,11 +6,13 @@ import be.bstorm.bf_java2024_stockmanagement.pl.validators.annotations.ImageForm
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 public class ArticleForm {
 
     @NotBlank(message = "Required field")
@@ -22,10 +24,17 @@ public class ArticleForm {
     private MultipartFile image;
     private UUID categoryId;
 
+    public ArticleForm(String designation, double unitPriceExcludingTax, VAT vat, UUID categoryId) {
+        this.designation = designation;
+        this.unitPriceExcludingTax = unitPriceExcludingTax;
+        this.vat = vat;
+        this.categoryId = categoryId;
+    }
+
     public Article toArticle() {
         return new Article(
                 this.designation,
-                (long) unitPriceExcludingTax * 100,
+                (long) (unitPriceExcludingTax * 100),
                 vat
         );
     }
