@@ -3,6 +3,7 @@ package be.bstorm.bf_java2024_stockmanagement.dl.entities;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.validator.constraints.Range;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.RoundingMode;
 import java.util.UUID;
 
 @Entity
+@SQLDelete(sql = "update Article set is_deleted = true where id = ?")
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true, of = {"designation", "unitPriceExcludingTax", "vat", "category"})
@@ -33,6 +35,9 @@ public class Article extends BaseEntity {
     @Setter
     @Column(nullable = true)
     private String picture;
+
+    @Column(nullable = false)
+    private final boolean isDeleted = false;
 
     @Setter
     @ManyToOne(fetch = FetchType.EAGER)

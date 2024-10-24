@@ -12,4 +12,5 @@ public interface ArticleService {
     Article findById(UUID id);
     Article save(Article article, MultipartFile image);
     void update(Article article, MultipartFile image);
+    void delete(UUID id);
 }

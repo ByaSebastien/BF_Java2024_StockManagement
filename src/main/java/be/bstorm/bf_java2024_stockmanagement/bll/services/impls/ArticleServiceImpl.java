@@ -3,6 +3,7 @@ package be.bstorm.bf_java2024_stockmanagement.bll.services.impls;
 import be.bstorm.bf_java2024_stockmanagement.bll.services.ArticleService;
 import be.bstorm.bf_java2024_stockmanagement.dal.repositories.ArticleRepository;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,12 +22,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> findAll() {
-        return articleRepository.findAll();
+        return articleRepository.findAllActive();
     }
 
     @Override
     public Article findById(UUID id) {
-        return articleRepository.findById(id).orElseThrow();
+        Article article = articleRepository.findById(id).orElseThrow();
+        if(article.isDeleted()){
+            throw new RuntimeException("Article deleted");
+        }
+        return article;
     }
 
     @Override
@@ -63,6 +68,15 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.save(existingArticle);
     }
 
+    @Transactional
+    @Override
+    public void delete(UUID id) {
+        if(!articleRepository.existsById(id)) {
+            throw new IllegalArgumentException("Article does not exist");
+        }
+        articleRepository.deleteById(id);
+    }
+
     private String saveImage(MultipartFile image) {
 
         String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
@@ -74,4 +88,6 @@ public class ArticleServiceImpl implements ArticleService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

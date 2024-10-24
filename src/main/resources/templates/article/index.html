@@ -6,41 +6,44 @@
     <link rel="stylesheet" th:href="@{/styles/style.css}">
 </head>
 <body>
-    <th:block th:insert="~{layout/header}"></th:block>
-    <main>
-        <button>
-            <a th:href="@{/article/create}">Create new article</a>
-        </button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Designation</th>
-                    <th>Price TTE</th>
-                    <th>Price TTC</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="article: ${articles}" th:object="${article}">
-                    <td th:text="*{designation()}"></td>
-                    <td th:text="*{unitPriceExcludingTax() + ' €'}"></td>
-                    <td th:text="*{unitPriceIncludingTax() + ' €'}"></td>
-                    <td th:text="*{category()}"></td>
-                    <td th:text="*{quantity()}"></td>
-                    <td>
-                        <button>
-                            <a th:href="@{/article/{id} (id=*{id()})}">Details</a>
-                        </button>
-                        <button>
-                            <a th:href="@{/article/update/{id} (id=*{id()})}">Update</a>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
-    <th:block th:insert="~{layout/footer}"></th:block>
+<th:block th:insert="~{layout/header}"></th:block>
+<main>
+    <button>
+        <a th:href="@{/article/create}">Create new article</a>
+    </button>
+    <table>
+        <thead>
+        <tr>
+            <th>Designation</th>
+            <th>Price TTE</th>
+            <th>Price TTC</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article: ${articles}" th:object="${article}">
+            <td th:text="*{designation()}"></td>
+            <td th:text="*{unitPriceExcludingTax() + ' €'}"></td>
+            <td th:text="*{unitPriceIncludingTax() + ' €'}"></td>
+            <td th:text="*{category()}"></td>
+            <td th:text="*{quantity()}"></td>
+            <td>
+                <button>
+                    <a th:href="@{/article/{id} (id=*{id()})}">Details</a>
+                </button>
+                <button>
+                    <a th:href="@{/article/update/{id} (id=*{id()})}">Update</a>
+                </button>
+                <form method="post" th:action="@{/article/delete/{id} (id=*{id()})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:insert="~{layout/footer}"></th:block>
 </body>
 </html>

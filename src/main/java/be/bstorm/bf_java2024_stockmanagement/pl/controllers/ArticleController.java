@@ -116,4 +116,10 @@ public class ArticleController {
         articleService.update(article,articleForm.getImage());
         return "redirect:/article";
     }
+
+    @PostMapping("/delete/{id}")
+    public String deleteArticle(@PathVariable UUID id) {
+        articleService.delete(id);
+        return "redirect:/article";
+    }
 }
