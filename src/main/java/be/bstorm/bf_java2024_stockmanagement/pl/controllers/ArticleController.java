@@ -12,6 +12,7 @@ import be.bstorm.bf_java2024_stockmanagement.pl.models.article.forms.ArticleUpda
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -85,6 +86,7 @@ public class ArticleController {
         return "redirect:/article";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/update/{id}")
     public String updateArticle(@PathVariable UUID id, Model model) {
         Article article = articleService.findById(id);
@@ -94,6 +96,7 @@ public class ArticleController {
         return "article/update";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/update")
     public String updateArticle(
         @Valid @ModelAttribute ArticleUpdateForm articleForm,
@@ -117,6 +120,7 @@ public class ArticleController {
         return "redirect:/article";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/delete/{id}")
     public String deleteArticle(@PathVariable UUID id) {
         articleService.delete(id);

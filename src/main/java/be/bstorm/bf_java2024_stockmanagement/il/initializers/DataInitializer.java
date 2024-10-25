@@ -1,16 +1,16 @@
 package be.bstorm.bf_java2024_stockmanagement.il.initializers;
 
-import be.bstorm.bf_java2024_stockmanagement.dal.repositories.ArticleRepository;
-import be.bstorm.bf_java2024_stockmanagement.dal.repositories.CategoryRepository;
-import be.bstorm.bf_java2024_stockmanagement.dal.repositories.StockMovementRepository;
-import be.bstorm.bf_java2024_stockmanagement.dal.repositories.StockRepository;
+import be.bstorm.bf_java2024_stockmanagement.dal.repositories.*;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Category;
+import be.bstorm.bf_java2024_stockmanagement.dl.entities.Role;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.StockMovement;
+import be.bstorm.bf_java2024_stockmanagement.dl.entities.person.User;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.StockMovementType;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,9 @@ public class DataInitializer implements CommandLineRunner {
     private final ArticleRepository articleRepository;
     private final CategoryRepository categoryRepository;
     private final StockMovementRepository movementRepository;
-    private final StockRepository stockRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -105,6 +107,36 @@ public class DataInitializer implements CommandLineRunner {
 
             for (StockMovement movement : movements) {
                 movementRepository.insertStockMovement(movement.getArticle().getId(), movement.getMovementType().toString(), movement.getQuantity());
+            }
+
+            if (roleRepository.count() == 0) {
+                List<Role> roles = List.of(
+                        new Role(UUID.randomUUID(), "ADMIN"),
+                        new Role(UUID.randomUUID(), "USER")
+                );
+                roleRepository.saveAll(roles);
+            }
+
+            if (userRepository.count() == 0) {
+                String password = passwordEncoder.encode("Test1234=");
+                User admin = new User(
+                        UUID.randomUUID(),
+                        "Admin",
+                        "Admin",
+                        "Admin@test.be",
+                        password
+                );
+                admin.addRole(roleRepository.findByName("ADMIN").orElseThrow());
+                User user = new User(
+                        UUID.randomUUID(),
+                        "User",
+                        "User",
+                        "User@test.be",
+                        password
+                );
+                admin.addRole(roleRepository.findByName("USER").orElseThrow());
+
+                userRepository.saveAll(List.of(admin, user));
             }
         }
     }

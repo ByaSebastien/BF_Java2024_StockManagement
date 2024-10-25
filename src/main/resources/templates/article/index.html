@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Articles List</title>
@@ -33,10 +34,10 @@
                 <button>
                     <a th:href="@{/article/{id} (id=*{id()})}">Details</a>
                 </button>
-                <button>
+                <button sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/article/update/{id} (id=*{id()})}">Update</a>
                 </button>
-                <form class="delete-button-form" method="post" th:action="@{/article/delete/{id} (id=*{id()})}">
+                <form sec:authorize="hasAuthority('ADMIN')" class="button-form" method="post" th:action="@{/article/delete/{id} (id=*{id()})}">
                     <button type="submit">Delete</button>
                 </form>
             </td>

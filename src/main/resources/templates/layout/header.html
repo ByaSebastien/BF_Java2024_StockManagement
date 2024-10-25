@@ -1,6 +1,11 @@
-<header>
+<header xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <h1>Stock management</h1>
     <nav>
         <a th:href="@{/article}">Articles</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+        <form sec:authorize="isAuthenticated()" class="logout-form" method="post" th:action="@{/logout}">
+            <button>logout</button>
+        </form>
     </nav>
 </header>
