@@ -6,11 +6,9 @@ import be.bstorm.bf_java2024_stockmanagement.dal.repositories.StockMovementRepos
 import be.bstorm.bf_java2024_stockmanagement.dal.repositories.StockRepository;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Article;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Category;
-import be.bstorm.bf_java2024_stockmanagement.dl.entities.Stock;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.StockMovement;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.StockMovementType;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
