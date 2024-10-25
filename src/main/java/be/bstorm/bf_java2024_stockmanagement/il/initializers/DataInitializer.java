@@ -10,6 +10,7 @@ import be.bstorm.bf_java2024_stockmanagement.dl.entities.Stock;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.StockMovement;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.StockMovementType;
 import be.bstorm.bf_java2024_stockmanagement.dl.enums.VAT;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -24,8 +25,8 @@ public class DataInitializer implements CommandLineRunner {
 
     private final ArticleRepository articleRepository;
     private final CategoryRepository categoryRepository;
-    private final StockRepository stockRepository;
     private final StockMovementRepository movementRepository;
+    private final StockRepository stockRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -85,7 +86,7 @@ public class DataInitializer implements CommandLineRunner {
                             LocalDateTime.now(),
                             articles.stream().filter(
                                     a -> a.getDesignation().equals("Dragon ball sparkling zero")).findFirst().orElseThrow()
-                            ),
+                    ),
                     new StockMovement(
                             UUID.randomUUID(),
                             StockMovementType.STOCK_IN,
@@ -104,26 +105,9 @@ public class DataInitializer implements CommandLineRunner {
                     )
             );
 
-            List<Stock> stocks = List.of(
-                    new Stock(
-                            UUID.randomUUID(),
-                            movements.get(0).getQuantity(),
-                            movements.get(0).getArticle()
-                    ),
-                    new Stock(
-                            UUID.randomUUID(),
-                            movements.get(1).getQuantity(),
-                            movements.get(1).getArticle()
-                    ),
-                    new Stock(
-                            UUID.randomUUID(),
-                            movements.get(2).getQuantity(),
-                            movements.get(2).getArticle()
-                    )
-            );
-
-            movementRepository.saveAll(movements);
-            stockRepository.saveAll(stocks);
+            for (StockMovement movement : movements) {
+                movementRepository.insertStockMovement(movement.getArticle().getId(), movement.getMovementType().toString(), movement.getQuantity());
+            }
         }
     }
 }

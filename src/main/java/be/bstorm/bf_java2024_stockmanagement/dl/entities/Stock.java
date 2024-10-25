@@ -15,7 +15,7 @@ public class Stock extends BaseEntity{
     @Setter
     private int currentQuantity;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.EAGER)
     private Article article;
 
     public Stock(UUID id, int currentQuantity, Article article) {
