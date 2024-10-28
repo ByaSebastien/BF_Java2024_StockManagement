@@ -4,6 +4,7 @@ import be.bstorm.bf_java2024_stockmanagement.bll.services.CategoryService;
 import be.bstorm.bf_java2024_stockmanagement.dal.repositories.CategoryRepository;
 import be.bstorm.bf_java2024_stockmanagement.dl.entities.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
